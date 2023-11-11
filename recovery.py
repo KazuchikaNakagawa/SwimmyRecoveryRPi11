@@ -4,7 +4,7 @@ from shutil import copy
 # ---- functions ----
 def input_dirname(originalname):
     while True:
-        name = input("new name>")
+        name = input("new name> ")
         if name == "help":
             for f in listdir(originalname):
                 dirsign = ""
@@ -16,7 +16,7 @@ def input_dirname(originalname):
 
 def input_filename(originalname):
     while True:
-        name = input("new name>")
+        name = input("new name> ")
         if name == "help":
             with open(originalname, "r") as f:
                 print(s for s in f.readlines(5))
@@ -46,7 +46,7 @@ def verifyFile(path, filename):
     except:
         print(f"checking {path}/{[filename]} ...要修正")
         rename_counter += 1
-        newname = input_dirname(join(path, filename))
+        newname = input_filename(join(path, filename))
         copy(join(path, filename),join(path, newname))
         filename = newname
 
@@ -64,11 +64,10 @@ print(
 01_生徒用を復元します。
 復元が終わり次第、USBディスクに保存し、11番は初期化してください。
 01_生徒用だけは手動で行う必要があります。
--- 動ける環境かどうかチェックします。
-"""
+-- 動ける環境かどうかチェックします。"""
 )
 
-print("01_生徒用　フォルダの存在確認", end="")
+print("\n\n01_生徒用　フォルダの存在確認", end="")
 if len(listdir(pathname)) == 0:
     print(f"\n{pathname}　が見つからないか空のようです。空の場合、フォルダを削除してください。その他の場合、中川にご連絡ください。")
     exit()
@@ -76,7 +75,8 @@ else:
     print("  ... OK")
 
 
-print("復元作業を開始します")
+print("\n\n復元作業を開始します")
+print("途中で文字化けしたフォルダ、ファイルの名前を聞かれることがあります。勘などで決めてください。helpと入力すると概要が見れます。")
 print("ファイルを表示するソフトを起動してください。起動したらstartと打ってください。")
 while input("> ") != "start":
     print("ファイルを表示するソフトを起動してください。起動したらstartと打ってください。")
