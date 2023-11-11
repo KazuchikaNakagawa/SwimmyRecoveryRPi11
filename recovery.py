@@ -58,7 +58,7 @@ def verify(path, filename):
 # ---- end ----
 
 rename_counter = 0
-pathname = "/Users/kaz04/C"#"/home/pi/Documents/01_生徒用"
+pathname = "/home/pi/Documents/01_生徒用"
 print(
     """メモ
 01_生徒用を復元します。
