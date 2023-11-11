@@ -1,25 +1,33 @@
-from os import listdir, mkdir
-from os.path import isfile, isdir, join
+from os import listdir
+from os.path import isfile, isdir, join, exists
 from shutil import copy
 # ---- functions ----
 def input_dirname(originalname):
+    help_count = -5
     while True:
         name = input("new name> ")
         if name == "help":
+            help_count+=5
             for f in listdir(originalname):
                 dirsign = ""
                 if isdir(join(originalname, f)):
                     dirsign = "(フォルダ)"
+                    continue
                 print(f"   |- {[f]} {dirsign}")
+                with open(join(originalname, f), "r") as file:
+                    print("-Preview-")
+                    print("    " + line for line in file.readlines(help_count))
             continue
         return name
 
 def input_filename(originalname):
+    help_count = 5
     while True:
         name = input("new name> ")
         if name == "help":
             with open(originalname, "r") as f:
-                print(s for s in f.readlines(5))
+                print(s for s in f.readlines(help_count))
+            help_count+=5
             continue
         return name
 
@@ -61,22 +69,26 @@ rename_counter = 0
 pathname = "/home/pi/Documents/01_生徒用" #/home/pi/Documents/01_生徒用
 print(
     """メモ
-01_生徒用フォルダを復元します。
+「01_生徒用」フォルダを復元します。
 復元が終わり次第、USBディスクに保存し、ラズパイ11番は初期化してください。
-01_生徒用フォルダのリネームだけは手動で行う必要があります。行なわれていない場合「01_生徒用　フォルダの存在確認」がエラーになるのでご連絡ください。
+「01_生徒用」フォルダのリネームだけは手動で行う必要があります。行なわれていない場合「01_生徒用　フォルダの存在確認」がエラーになるのでご連絡ください。
 -- 動ける環境かどうかチェックします。"""
 )
 
-print("\n\n01_生徒用　フォルダの存在確認", end="")
+print("\n\n「01_生徒用」フォルダの存在確認", end="")
+
+if not exists(pathname):
+    print(f" ... Error\n{pathname}　が見つかりませんでした。中川にご連絡ください。")
+    exit()
 if len(listdir(pathname)) == 0:
-    print(f"\n{pathname}　が見つからないか空のようです。空の場合、フォルダを削除してください。その他の場合、中川にご連絡ください。")
+    print(f" ... Error\n{pathname}　が見つからないか空のようです。空の場合、フォルダを削除してください。その他の場合、中川にご連絡ください。")
     exit()
 else:
     print("  ... OK")
 
 
 print("\n\n復元作業を開始します")
-print("途中で文字化けしたフォルダ、ファイルの名前を聞かれることがあります。勘などで決めてください。helpと入力すると概要が見れます。")
+print("途中で文字化けしたファイル/フォルダの名前を聞かれることがあります。勘などで決めてください。名前入力時にhelpと入力するとファイル/フォルダの概要が見れます。")
 print("ファイルを表示するソフトを起動してください。起動したらstartと打ってください。")
 while input("> ") != "start":
     print("ファイルを表示するソフトを起動してください。起動したらstartと打ってください。")
@@ -94,7 +106,7 @@ while True:
         for f in listdir(pathname):
             verify(pathname, f)
         if rename_counter == 0:
-            print("フォルダは全て復元されました。マネージャーに報告のもと、USBディスクに移動してください。ラズパイ11番は初期化してください。")
+            print("フォルダは全て復元されました。マネージャーに報告の上、「01_生徒用」フォルダをUSBディスクに移動してください。ラズパイ11番は初期化してください。")
             exit()
         else:
             print("一通りの整理が終了しました。終了ならq,最終チェックならcを入力")
