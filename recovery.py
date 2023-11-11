@@ -35,7 +35,7 @@ def verifyDir(path, dirname):
         dirname = newname
     
     path = join(path, dirname)
-    print("    --フォルダの中身を確認します")
+    print(f"    --{dirname}フォルダの中身を確認します")
     for f in listdir(path):
         verify(path, f)
 
@@ -56,14 +56,14 @@ def verify(path, filename):
     else:
         verifyDir(path, filename)
 # ---- end ----
-
+# ---- main ----
 rename_counter = 0
-pathname = "/home/pi/Documents/01_生徒用"
+pathname = "/home/pi/Documents/01_生徒用" #/home/pi/Documents/01_生徒用
 print(
     """メモ
-01_生徒用を復元します。
-復元が終わり次第、USBディスクに保存し、11番は初期化してください。
-01_生徒用だけは手動で行う必要があります。
+01_生徒用フォルダを復元します。
+復元が終わり次第、USBディスクに保存し、ラズパイ11番は初期化してください。
+01_生徒用フォルダのリネームだけは手動で行う必要があります。行なわれていない場合「01_生徒用　フォルダの存在確認」がエラーになるのでご連絡ください。
 -- 動ける環境かどうかチェックします。"""
 )
 
@@ -94,7 +94,7 @@ while True:
         for f in listdir(pathname):
             verify(pathname, f)
         if rename_counter == 0:
-            print("フォルダは全て復元されました。マネージャーに報告のもと、USBディスクに移動してください。11番は初期化してください。")
+            print("フォルダは全て復元されました。マネージャーに報告のもと、USBディスクに移動してください。ラズパイ11番は初期化してください。")
             exit()
         else:
             print("一通りの整理が終了しました。終了ならq,最終チェックならcを入力")
