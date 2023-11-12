@@ -15,7 +15,7 @@ def input_dirname(originalname):
                     continue
                 print(f"   |- {[f]} {dirsign}")
                 with open(join(originalname, f), "r") as file:
-                    print("        -Preview-")
+                    if help_count >= 5: print("        -Preview-")
                     print("        " + line for line in file.readlines(help_count))
             continue
         return name
